@@ -309,5 +309,43 @@ input[value=Code]{
     width: 23.3125rem;
 }
 
+/* hobbies components  */
+
+.hobbies1{
+    display: flex;
+}
+.hobby1{
+    margin-right: 3.75rem;
+}
+.hobbies h1{
+    font-size: var(--xl-size);
+    color: var(--lightness31);
+    margin-bottom: 1.5625rem;
+}
+.hobby1 img{
+    width: 18.4375rem;
+    height: 8.6875rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.625rem;
+}
+.hobby-title{
+    font-weight: var(--bold);
+    color: var(--lightness20);
+    margin-bottom: 0.625rem;
+}
+.hobby1 p,.hobby2 p{
+    font-size: var(--m-size);
+    color: var(--lightness51);
+}
+.hobby2 img{
+    width: 23.9375rem;
+    height: 8.6875rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.625rem;
+}
+.hobby2{
+    margin-bottom: 2.25rem;
+}
+
 
 
