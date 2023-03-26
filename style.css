@@ -347,5 +347,52 @@ input[value=Code]{
     margin-bottom: 2.25rem;
 }
 
+/* projects title components  */
 
+.projects-title p{
+    font-size: var(--xl-size);
+    color: var(--lightness31);
+}
+.projects-title2 p{
+    margin-bottom: 1.5625rem;
+}
+.projects-filter-button{ 
+    font-size: var(--s-size);
+    color: var(--lightness31);
+    border-color: var(--lightness31);
+    padding: 0.5rem 1.375rem;
+    border-radius: 0.75rem;
+    margin-right: 1rem;
+}
+.projects-filter-button:hover{
+    cursor: pointer;
+    color: var(--blue);
+    border-color: var(--blue);
+}
+.projects-filter-button:active{
+    color: var(--lightness100);
+    background-color: var(--blue);
+}
 
+/* pages links buttons component */
+
+.pages-buttons > input{
+    font-size: var(--xs-size);
+    color: var(--lightness31);
+    border-color: var(--lightness31);
+    padding: 0.6875rem 0.875rem;
+    border-radius: 0.25rem;
+    margin-right: 0.75rem;
+}
+.pages-buttons > input:hover{
+    cursor: pointer;
+    color: var(--blue);
+    border-color: var(--blue);
+}
+.pages-buttons > input:active{
+    color: var(--lightness100);
+    background-color: var(--blue);
+}
+.pages-buttons span{
+    margin-right: 0.75rem;
+}
