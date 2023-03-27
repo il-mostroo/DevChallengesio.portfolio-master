@@ -1,0 +1,25 @@
+body{
+    padding: 4.375rem 11rem 0 11rem;
+}
+.wrap{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows:repeat(1, 1fr);
+    column-gap: 2.1875rem;
+    row-gap: 2.625rem;
+}
+.profile1, .projects2, .projects-title2{
+    grid-column: span 2;
+}
+.projects2{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.project{
+    padding: 1.125rem;
+}
+.project > {
+    max-width: 18.25rem;
+}
+

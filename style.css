@@ -29,18 +29,22 @@ body{
     min-height: 100vh;
     position: relative;
     background-color: #F2F2F2;
-    padding: 70px 200px;
 }
-
 section{
-    padding: 1.375rem;
-    background-color: white;
+    width: fit-content;
+    height: fit-content;
     border-radius: 0.75rem;
     position:relative;
     -webkit-box-shadow: 0 7px 6px -6px #cbcbcb;
-	   -moz-box-shadow: 0 7px 6px -6px #cbcbcb;
-	        box-shadow: 0 7px 6px -6px #cbcbcb;
+    -moz-box-shadow: 0 7px 6px -6px #cbcbcb;
+    box-shadow: 0 7px 6px -6px #cbcbcb;
 }
+section:not(.projects2){
+    padding: 1.375rem;
+    /* background-color: white; */
+    background-color: violet;
+}
+
 /* profile components */
 
 .profile1 img{
@@ -111,14 +115,17 @@ section{
 .projects1{
     display: flex;
 }
+.project{
+    /* margin-right: 1.9069rem; */
+    padding: 1.375rem;
+    background-color: white;
+    border-radius: 0.75rem;
+}
 .projects1 img{
     width: 24rem;
     height: 16.6875rem;
     border-radius: 0.75rem;
     margin-right: 3.25rem;
-}
-.projects2{
-    width: 24.6875rem;
 }
 .technology {
     font-size: var(--m-size);
@@ -162,9 +169,6 @@ input[value=Code]{
     width: 21.9375rem;
     margin-bottom: 2.5625rem;
 }
-.profile2{
-    width: 395px;
-}
 /* statistics components  */
 
 .statistics1 h1, .statistics2 h1{
@@ -176,6 +180,7 @@ input[value=Code]{
 .skill-container{
     display: flex;
     align-items: center;
+    margin-bottom: 1.125rem;
 }
 .skill-container p{
     font-weight: var(--medium);
@@ -236,9 +241,6 @@ input[value=Code]{
     grid-template-rows: repeat(3, 1fr);
     column-gap:3.3125rem;
 }
-.statistics2{
-    width: 24.3125rem;
-}
 
 /* blog components  */
 
@@ -268,9 +270,6 @@ input[value=Code]{
 .blog1{
     display:flex;
 }
-.blog2{
-    width: 33.5rem;
-}
 .blog-content{
     margin-right: 3.8125rem;
 }
@@ -298,9 +297,6 @@ input[value=Code]{
 }
 .experiences1{
     display: flex;
-}
-.experiences2-section{
-    width: 26.0625rem;
 }
 .experience{
     display: flex;
@@ -336,9 +332,6 @@ input[value=Code]{
 
 .hobbies1{
     display: flex;
-}
-.hobbies2{
-    width: 26.6875rem;
 }
 .hobby1{
     margin-right: 3.75rem;
