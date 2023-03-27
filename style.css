@@ -41,8 +41,7 @@ section{
 }
 section:not(.projects2){
     padding: 1.375rem;
-    /* background-color: white; */
-    background-color: violet;
+    background-color: white;
 }
 
 /* profile components */

@@ -2,18 +2,15 @@ body{
     padding: 4.375rem 11rem 0 11rem;
 }
 .wrap{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows:repeat(1, 1fr);
-    column-gap: 2.1875rem;
+    display:grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(6, auto);
     row-gap: 2.625rem;
+    column-gap: 2.1875rem;
 }
-.profile1, .projects2, .projects-title2{
-    grid-column: span 2;
-}
-.projects2{
+.projects2, .profile1{
     display: flex;
-    width: 100%;
+    max-width: 100%;
     justify-content: space-between;
 }
 .project{
@@ -21,5 +18,26 @@ body{
 }
 .project > {
     max-width: 18.25rem;
+}
+.profile1, .project-title1, .projects2{
+    grid-column: span 2;
+}
+.statistics2{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+.blog2{
+    grid-row: 2/4;
+}
+.hobbies2{
+    grid-row: 3/5;
+}
+.experiences2-section{
+    grid-column: 2/3;
+    grid-row:4/5;
+}
+.pages-buttons{
+    grid-column: 2/3;
+    justify-self: end;
 }
 
