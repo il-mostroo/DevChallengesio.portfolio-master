@@ -39,7 +39,7 @@ section{
     -moz-box-shadow: 0 7px 6px -6px #cbcbcb;
     box-shadow: 0 7px 6px -6px #cbcbcb;
 }
-section:not(.projects2){
+section:not(.projects2, .projects1){
     padding: 1.375rem;
     background-color: white;
 }
