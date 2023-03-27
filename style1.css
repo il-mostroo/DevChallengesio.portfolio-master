@@ -8,13 +8,16 @@ body{
     row-gap: 2.625rem;
     column-gap: 2.1875rem;
 }
-.projects2, .profile1{
+.projects2{
     display: flex;
     max-width: 100%;
     justify-content: space-between;
 }
 .project{
     padding: 1.125rem;
+}
+.project:not(:nth-child(3)){
+    margin-right: 1.9063rem;
 }
 .project > {
     max-width: 18.25rem;
