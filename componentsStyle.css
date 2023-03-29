@@ -140,19 +140,19 @@ section:not(.projects2, .projects1){
     color: var(--lightness20);
     margin-bottom: 1.125rem;
 }
-.project-content1 > p{
+.project p{
     font-size: var(--m-size);
     color: var(--lightness51);
     margin-bottom: 3.0625rem;
 }
-input[value=Demo]{
+.buttons button:nth-child(1){
     color: var(--lightness100);
     padding: 0.8125rem 2.5rem;
     background-color: var(--blue);
     border-radius: 0.75rem;
     margin-right: 0.6875rem;
 }
-input[value=Code]{
+.buttons button:nth-child(2){
     color: var(--blue);
     padding: 0.75rem 2.1875rem;
     background-color: var(--lightness100);
