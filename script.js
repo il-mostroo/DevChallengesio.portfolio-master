@@ -36,7 +36,7 @@ const projects = [
     {
       "image": "resources/recipe.jpg",
       "alt": "recipe-image",
-      "technologies": ["#HTML", "#CSS", "#responsive"],
+      "technologies": ["#HTML", "#CSS", "#responsive", "#all"],
       "name": "Recipe Blog",
       "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
       "buttons": ["Demo", "Code"]
@@ -44,7 +44,7 @@ const projects = [
     {
       "image": "resources/recipe.jpg",
       "alt": "recipe-image",
-      "technologies": ["#REACT", "#responsive"],
+      "technologies": ["#REACT", "#responsive", "#all"],
       "name": "Recipe Blog",
       "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
       "buttons": ["Demo", "Code"]
@@ -52,7 +52,7 @@ const projects = [
     {
       "image": "resources/recipe.jpg",
       "alt": "recipe-image",
-      "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive"],
+      "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive", "#all"],
       "name": "Recipe Blog",
       "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
       "buttons": ["Demo", "Code"]
@@ -60,33 +60,36 @@ const projects = [
     {
     "image": "resources/recipe.jpg",
     "alt": "recipe-image",
-    "technologies": ["#HTML", "#CSS", "#responsive"],
+    "technologies": ["#HTML", "#CSS", "#responsive", "#all"],
     "name": "Recipe Blog",
     "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
     "buttons": ["Demo", "Code"]
-    },
-    {
+},
+{
     "image": "resources/recipe.jpg",
     "alt": "recipe-image",
-    "technologies": ["#REACT", "#responsive"],
+    "technologies": ["#REACT", "#responsive", "#all"],
     "name": "Recipe Blog",
     "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
     "buttons": ["Demo", "Code"]
-    },
-    {
+},
+{
     "image": "resources/recipe.jpg",
     "alt": "recipe-image",
-    "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive"],
+    "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive", "#all"],
     "name": "Recipe Blog",
     "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
     "buttons": ["Demo", "Code"]
-    }
-  ];
+}
+];
 
-//   render all projects on page first load:
-
+// selecting elements:
 const projectListElement = document.querySelector('#project-list');
-projects.forEach((project) => {
+const projectsItems=document.querySelector('#project-list').children
+const filterButtons=document.querySelectorAll('.projects-filter-button')
+
+// project rendering function:
+function renderProject (project){
     const projectElement = document.createElement('div');
     projectElement.classList.add('project');
   
@@ -103,6 +106,7 @@ projects.forEach((project) => {
       technologyElement.classList.add('technology');
       technologiesElement.appendChild(technologyElement);
     });
+    technologiesElement.querySelector('.technology:last-child').style.display='none'
     projectElement.appendChild(technologiesElement);
 
   
@@ -125,11 +129,40 @@ projects.forEach((project) => {
     projectElement.appendChild(buttonsElement);
 
     projectListElement.appendChild(projectElement);
-  });
-  
-  
-  
-  
-  
-  
+
+}
+
+// projects cleaner function:
+function cleanProjects (){
+    for (let project of projectsItems){
+        project.style.display='none' 
+    }
+}
+
+//   rendering first three projects on first page load function:
+function defaultRender(){
+    for(let i=0; i<3; i++){
+        renderProject(projects[i])
+    }
+}
+
+
+//   add filter by tag functionality:
+function renderProjectsByTag(){
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+            const selectedTag=event.target.value.toLowerCase()
+            cleanProjects()
+            projects.forEach(project => {
+                project.technologies.forEach(technology => {
+                    if(technology.slice(1).toLowerCase()===selectedTag)
+                        renderProject(project)
+                })
+            })
+        })
+    })
+}
+    
+defaultRender()
+renderProjectsByTag()
   
