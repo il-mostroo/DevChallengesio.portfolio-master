@@ -383,5 +383,15 @@ section:not(#project-list){
     margin-bottom: 2.625rem;
 }
 
+/* footer: */
+footer p{
+    text-align: center;
+    color: hsla(229, 19%, 77%, 1);
+    margin-bottom: 1.5rem;
+}
+footer p a {
+    color: var(--footer-color);
+}
+
 
 
