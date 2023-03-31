@@ -132,23 +132,25 @@ function renderProjects(projectsArray) {
         renderProject(project);
     });
 }   
-// render pagination and add projects rendering event listeners to buttons function:
-function renderPagination(projectsArray){
-    const totalPages = Math.ceil(projectsArray.length / projectsPerPage);
-    const paginationContainer = document.getElementById("pagination-container");
-    paginationContainer.innerHTML = "";
-        for (let i = 1; i <= totalPages; i++) {
-          const button = document.createElement("button");
-          button.classList.add('pagination-button');
-          button.innerText = i;
-          button.addEventListener("click", (event) => {
-              currentPage = i;
-              cleanProjects()
-              renderProjects(projectsArray);
-            });
-            paginationContainer.appendChild(button);
-        }
-        const buttons=document.querySelectorAll('.pagination-button')
+
+// create pagination buttons:
+function createPaginationButtons(containerElement, totalPages, arrayItems){
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.classList.add('pagination-button');
+        button.innerText = i;
+        button.addEventListener("click", (event) => {
+            currentPage = i;
+            cleanProjects()
+            renderProjects(arrayItems);
+          });
+          containerElement.appendChild(button);
+      }
+}
+
+// style active pagination button:
+function styleActivePaginationBtn(){
+    const buttons=document.querySelectorAll('.pagination-button')
         buttons.forEach(button => {
             button.addEventListener('click',(event)=>{
                 buttons.forEach(button=>{
@@ -159,7 +161,14 @@ function renderPagination(projectsArray){
                 event.target.classList.add('active-pagination-button')
             })
         })
-        
+}
+// render pagination and add projects rendering event listeners to buttons function:
+function renderPagination(projectsArray){
+    const totalPages = Math.ceil(projectsArray.length / projectsPerPage);
+    const paginationContainer = document.getElementById("pagination-container");
+    paginationContainer.innerHTML = "";
+    createPaginationButtons(paginationContainer, totalPages, projectsArray)
+    styleActivePaginationBtn()    
 }
 // add event listeners on filter buttons, get filtered projects and render them:
 filterButtons.forEach(button => {
