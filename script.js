@@ -1,5 +1,3 @@
-// filter projects by tags and add pagination using a json file :
-
 // projects json file:
 const projects = [
     {
@@ -52,14 +50,14 @@ const projects = [
 }
 ];
 
-// selecting elements:
+// selecting elements and creating variables:
 const projectListElement = document.querySelector('#project-list');
 const projectsItems=document.querySelector('#project-list').children
 const filterButtons=document.querySelectorAll('.projects-filter-button')
 const projectsPerPage = 3;
 let currentPage = 1;
 
-// project rendering function:
+// function to render a project:
 function renderProject (project){
     const projectElement = document.createElement('div');
     projectElement.classList.add('project');
@@ -103,12 +101,12 @@ function renderProject (project){
 
 }
 
-// projects cleaner function:
+// function to empty projects container:
 function cleanProjects (){
     projectListElement.innerHTML = "";
 }
 
-// get filtered projects by selected tag function:
+// function to get filtered projects by selected tag:
 function getFilteredProjects(event){
     const filteredProjects=[]
             const selectedTag=event.target.value.toLowerCase()
@@ -123,7 +121,7 @@ function getFilteredProjects(event){
             return filteredProjects;
 }
 
-// render projects using pagination function :
+// function to render an array of projects using pagination:
 function renderProjects(projectsArray) {
     const startIndex = (currentPage - 1) * projectsPerPage;
     const endIndex = startIndex + projectsPerPage;
@@ -133,7 +131,7 @@ function renderProjects(projectsArray) {
     });
 }   
 
-// create pagination buttons:
+// function to create pagination buttons:
 function createPaginationButtons(containerElement, totalPages, arrayItems){
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement("button");
@@ -148,7 +146,7 @@ function createPaginationButtons(containerElement, totalPages, arrayItems){
       }
 }
 
-// style active pagination button:
+// function to style active pagination button:
 function styleActivePaginationBtn(){
     const buttons=document.querySelectorAll('.pagination-button')
         buttons.forEach(button => {
@@ -162,7 +160,7 @@ function styleActivePaginationBtn(){
             })
         })
 }
-// render pagination and add projects rendering event listeners to buttons function:
+// function to render pagination buttons and add event listeners to them:
 function renderPagination(projectsArray){
     const totalPages = Math.ceil(projectsArray.length / projectsPerPage);
     const paginationContainer = document.getElementById("pagination-container");
@@ -184,3 +182,11 @@ filterButtons.forEach(button => {
 // default projects rendering on page load:
 renderProjects(projects)
 renderPagination(projects)
+
+// animate progress bars using animation library:
+import animationLibrary from './progressBarsAnimationLib.js';
+const progressBars=document.querySelectorAll('.progress-bar')
+progressBars.forEach(progressBar=>{
+    animationLibrary.animateProgressBar(progressBar)
+})
+
