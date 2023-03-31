@@ -393,8 +393,12 @@ section:not(.projects2, .projects1){
 }
 
 /* pages links buttons component */
-
-.pages-buttons > input{
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.pagination-button{
     font-size: var(--xs-size);
     color: var(--lightness31);
     border-color: var(--lightness31);
@@ -402,15 +406,13 @@ section:not(.projects2, .projects1){
     border-radius: 0.25rem;
     margin-right: 0.75rem;
 }
-.pages-buttons > input:hover{
+.pagination-button:not(.disabled):hover{
     cursor: pointer;
     color: var(--blue);
     border-color: var(--blue);
 }
-.pages-buttons > input:active{
+.active-pagination-button{
     color: var(--lightness100);
     background-color: var(--blue);
 }
-.pages-buttons span{
-    margin-right: 0.75rem;
-}
+
