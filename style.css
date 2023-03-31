@@ -35,17 +35,24 @@ body{
     padding: 4.375rem 13.68% 0 13.68%;
 }
 
-.wrap{
-    display:grid;
-    grid-template-columns: repeat(2, auto);   
-    grid-template-rows: repeat(4, auto); 
-    row-gap: 2.625rem;
-    column-gap: 2.625rem;
+.middle-content{
+    display: flex;
+    margin-bottom: 42px;
 }
-
-
+.left-column, .right-column{
+    justify-content: space-between;
+}
+.left-column{
+    margin-right: 2.625rem;
+}
+.right-column{
+    width: 100%;
+}
+.profile, .projects-filter-section, #project-list, #pagination-container{
+    margin-bottom: 2.625rem;
+}
 section{
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     border-radius: 0.75rem;
     position:relative;
@@ -93,6 +100,7 @@ section:not(#project-list){
 }
 .profile{
     display: flex;
+    grid-column: span 2;
     padding: 1.375rem 1.2769rem 1.4287rem 1.5962rem;
 }
 .profile .content{
@@ -107,9 +115,7 @@ section:not(#project-list){
 .container p{
     display: inline-block;
 }
-.profile{
-    grid-column: span 2;
-}
+
 
 /* stats section: */
 .statistics h1{
@@ -372,9 +378,6 @@ section:not(#project-list){
 .active-pagination-button{
     color: var(--lightness100);
     background-color: var(--blue);
-}
-.left-column{
-    grid-column-start: 1;
 }
 .left-column section:not(:last-child), .right-column section:not(:last-child){
     margin-bottom: 2.625rem;
