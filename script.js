@@ -1,54 +1,7 @@
-// projects json file:
-const projects = [
-    {
-      "image": "resources/recipe.jpg",
-      "alt": "recipe-image",
-      "technologies": ["#HTML", "#CSS", "#responsive", "#all"],
-      "name": "Recipe Blog1",
-      "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-      "buttons": ["Demo", "Code"]
-    },
-    {
-      "image": "resources/recipe.jpg",
-      "alt": "recipe-image",
-      "technologies": ["#REACT", "#responsive", "#all"],
-      "name": "Recipe Blog2",
-      "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-      "buttons": ["Demo", "Code"]
-    },
-    {
-      "image": "resources/recipe.jpg",
-      "alt": "recipe-image",
-      "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive", "#all"],
-      "name": "Recipe Blog3",
-      "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-      "buttons": ["Demo", "Code"]
-    },
-    {
-    "image": "resources/recipe.jpg",
-    "alt": "recipe-image",
-    "technologies": ["#HTML", "#CSS", "#responsive", "#all"],
-    "name": "Recipe Blog4",
-    "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-    "buttons": ["Demo", "Code"]
-},
-{
-    "image": "resources/recipe.jpg",
-    "alt": "recipe-image",
-    "technologies": ["#REACT", "#responsive", "#all"],
-    "name": "Recipe Blog5",
-    "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-    "buttons": ["Demo", "Code"]
-},
-{
-    "image": "resources/recipe.jpg",
-    "alt": "recipe-image",
-    "technologies": ["#HTML", "#CSS", "#BOOTSTRAP", "#responsive", "#all"],
-    "name": "Recipe Blog6",
-    "description": "In this project, I work with HTML and CSS to create a responsive page. The design is from devchallenge.io. Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque feugiat malesuada molestie.",
-    "buttons": ["Demo", "Code"]
-}
-];
+import { Requester } from './requester.js';
+import { ProjectView } from './projectView.js';
+const requester = new Requester()
+const projectView = new ProjectView()
 
 // selecting elements and creating variables:
 const projectListElement = document.querySelector('#project-list');
@@ -58,48 +11,7 @@ const projectsPerPage = 3;
 let currentPage = 1;
 
 // function to render a project:
-function renderProject (project){
-    const projectElement = document.createElement('div');
-    projectElement.classList.add('project');
-  
-    const imageElement = document.createElement('img');
-    imageElement.src = project.image;
-    imageElement.alt = project.alt;
-    projectElement.appendChild(imageElement);
 
-    const technologiesElement = document.createElement('div');
-    technologiesElement.classList.add('technologies');
-    project.technologies.forEach((technology) => {
-      const technologyElement = document.createElement('p');
-      technologyElement.textContent = technology;
-      technologyElement.classList.add('technology');
-      technologiesElement.appendChild(technologyElement);
-    });
-    technologiesElement.querySelector('.technology:last-child').style.display='none'
-    projectElement.appendChild(technologiesElement);
-
-  
-    const nameElement = document.createElement('h1');
-    nameElement.classList.add('project-name');
-    nameElement.textContent = project.name;
-    projectElement.appendChild(nameElement);
-  
-    const descriptionElement = document.createElement('p');
-    descriptionElement.textContent = project.description;
-    projectElement.appendChild(descriptionElement);
-
-    const buttonsElement = document.createElement('div');
-    buttonsElement.classList.add('buttons');
-    project.buttons.forEach((button) => {
-        const buttonElement = document.createElement('button');
-        buttonElement.textContent = button;
-        buttonsElement.appendChild(buttonElement);
-    });
-    projectElement.appendChild(buttonsElement);
-
-    projectListElement.appendChild(projectElement);
-
-}
 
 // function to empty projects container:
 function cleanProjects (){
@@ -107,27 +19,14 @@ function cleanProjects (){
 }
 
 // function to get filtered projects by selected tag:
-function getFilteredProjects(event){
-    const filteredProjects=[]
-            const selectedTag=event.target.value.toLowerCase()
-            projects.forEach(project => {
-                project.technologies.forEach(technology => {
-                    if(technology.slice(1).toLowerCase()===selectedTag){
-                        filteredProjects.push(project)
-                    }
-                })
-                
-            })
-            return filteredProjects;
-}
+
 
 // function to render an array of projects using pagination:
-function renderProjects(projectsArray) {
-    const startIndex = (currentPage - 1) * projectsPerPage;
-    const endIndex = startIndex + projectsPerPage;
-    const projectsToRender = projectsArray.slice(startIndex, endIndex);
+function renderProjects(currentPage, projectsPerPage, selectedTag) {
+    const projectsToRender = requester.getProjects(currentPage, projectsPerPage,selectedTag)
     projectsToRender.forEach(project => {
-        renderProject(project);
+        const projectElement = projectView.createProjectElement(project)
+        projectListElement.appendChild(projectElement)
     });
 }   
 
@@ -171,7 +70,8 @@ function renderPagination(projectsArray){
 // add event listeners on filter buttons, get filtered projects and render them:
 filterButtons.forEach(button => {
     button.addEventListener('click',(event) => {
-        const filteredProjects=[...getFilteredProjects(event)];
+        const selectedTag=event.target.value.toLowerCase()
+        const filteredProjects=[...requester.getProjects(currentPage, projectsPerPage, selectedTag)];
         cleanProjects()
         renderProjects(filteredProjects);
         renderPagination(filteredProjects)
@@ -180,8 +80,8 @@ filterButtons.forEach(button => {
 
 
 // default projects rendering on page load:
-renderProjects(projects)
-renderPagination(projects)
+renderProjects(currentPage, projectsPerPage, "all")
+// renderPagination(projects)
 
 // animate progress bars using animation library:
 import animationLibrary from './progressBarsAnimationLib.js';
