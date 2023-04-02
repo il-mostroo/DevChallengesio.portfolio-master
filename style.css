@@ -302,6 +302,7 @@ section:not(#project-list){
 /* projects component: */
 #project-list{
     display: flex;
+    flex-direction: column;
 }
 .project{
     padding: 1.375rem;
