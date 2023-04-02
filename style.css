@@ -334,6 +334,10 @@ section:not(#project-list){
     color: var(--lightness20);
     margin-bottom: 1.125rem;
 }
+.page{
+    display: flex;
+    flex-direction: row;
+}
 .project p{
     max-width: 18rem;
     font-size: var(--m-size);
