@@ -108,27 +108,30 @@ export class ProjectsController
         this.filterButtons.forEach(button => {
             button.addEventListener('click',(event) => {
                 const selectedTag=event.target.value.toLowerCase()
-                const filteredProjects=[...this.requester.getProjectsByCriteria(this.currentPage, this.projectsPerPage, selectedTag)]
+                console.log(selectedTag)
+                const filteredProjects=[...this.requester.getFilteredProjects(selectedTag)]
                 this.cleanProjects()
-                this.renderProjectsWithPagination(filteredProjects)
+                this.renderProjectsInPages(filteredProjects)
+                this.paginationContainer.innerHTML=""
                 this.renderPagination(filteredProjects)
+                this.styleActivePaginationBtn()
             })
         })
     }
 
-    createPaginationButtons(totalPages, arrayItems){
-        for (let i = 1 ;i <= totalPages ;i++) {
-            const button = document.createElement("button")
-            button.classList.add('pagination-button')
-            button.innerText = i
-            button.addEventListener("click", (event) => {
-                currentPage = i
-                this.cleanProjects()
-                this.renderProjectsWithPagination(arrayItems)
-              })
-              this.paginationContainer.appendChild(button)
-          }
-    }
+    // createPaginationButtons(totalPages, arrayItems){
+    //     for (let i = 1 ;i <= totalPages ;i++) {
+    //         const button = document.createElement("button")
+    //         button.classList.add('pagination-button')
+    //         button.innerText = i
+    //         button.addEventListener("click", (event) => {
+    //             currentPage = i
+    //             this.cleanProjects()
+    //             this.renderProjectsWithPagination(arrayItems)
+    //           })
+    //           this.paginationContainer.appendChild(button)
+    //       }
+    // }
 
     styleActivePaginationBtn(){
         const buttons=this.container.querySelectorAll('.pagination-button')
