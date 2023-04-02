@@ -28,7 +28,6 @@ export class ProjectsController
     }
 
     onPageLoad() {
-        // const projectsToRender = this.requester.getProjectsByCriteria(this.currentPage, this.projectsPerPage,"all")
         const totalProjects = this.requester.getAllProjects()        
         this.renderProjectsWithPagination(totalProjects)
         this.renderPagination(totalProjects)
@@ -41,39 +40,36 @@ export class ProjectsController
     renderProjectsWithPagination(projects) {
         const totalPages = Math.ceil(projects.length / this.projectsPerPage);
         for (let i = 0; i < totalPages; i++) {
-          const StartIndex = i * this.projectsPerPage;
-          const EndIndex = StartIndex + this.projectsPerPage;
-      
-          const pageProjects = projects.slice(StartIndex, EndIndex);
-      
-          const projectsPage = document.createElement("div");
-          projectsPage.classList.add("page");
-          projectsPage.dataset.pageNumber = i + 1;
-      
-          pageProjects.forEach((pageProject) => {
-            const projectElement = this.projectView.createProjectElement(pageProject);
-            projectsPage.appendChild(projectElement);
-          });
-      
-          if (i === 0) {
-            projectsPage.style.display = "block";
-          } else {
-            projectsPage.style.display = "none";
-          }
-      
-          this.projectListElement.appendChild(projectsPage);
+            const StartIndex = i * this.projectsPerPage;
+            const EndIndex = StartIndex + this.projectsPerPage;
+            const pageProjects = projects.slice(StartIndex, EndIndex);
+            const projectsPage = document.createElement("div");
+            projectsPage.classList.add("page");
+            projectsPage.dataset.pageNumber = i + 1;
+
+            pageProjects.forEach((pageProject) => {
+                const projectElement = this.projectView.createProjectElement(pageProject);
+                projectsPage.appendChild(projectElement);
+            });
+
+            if (i === 0) {
+                projectsPage.style.display = "block";
+            } else {
+                projectsPage.style.display = "none";
+            }
+            this.projectListElement.appendChild(projectsPage);
         }
       
         const allPages = document.querySelectorAll(".page");
       
         allPages.forEach((page) => {
-          const pageNumber = parseInt(page.dataset.pageNumber);
+        const pageNumber = parseInt(page.dataset.pageNumber);
       
-          if (pageNumber === 1) {
-            page.style.display = "flex";
-          } else {
-            page.style.display = "none";
-          }
+            if (pageNumber === 1) {
+                page.style.display = "flex";
+            } else {
+                page.style.display = "none";
+            }
         });
       }
       
