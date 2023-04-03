@@ -24,78 +24,18 @@ export class ProjectsController
         this.projectsItems=this.container.querySelector('#project-list').children
         this.filterButtons=this.container.querySelectorAll('.projects-filter-button')
         this.paginationContainer = this.container.querySelector("#pagination-container")
-
     }
 
     onPageLoad() {
-        const totalProjects = this.requester.getAllProjects()        
-        this.renderProjectsInPages(totalProjects)
+        this.manageDefaultSelectedTag()
+        const selectedTag = this.getSelectedTag()
+        const projectsData = this.requester.getProjectsByCriteria(this.currentPage, this.projectsPerPage, selectedTag)
+        const totalProjects = projectsData.count
+        const projectsToRender = projectsData.filteredProjects
+        this.renderProjects(projectsToRender)
         this.renderPagination(totalProjects)
         this.styleActivePaginationBtn()
     }
-
-    cleanProjects() {
-        this.projectListElement.innerHTML = ""
-    }
-
-    renderProjectsInPages(projects) {
-        const totalPages = Math.ceil(projects.length / this.projectsPerPage)
-        for (let i = 0 ;i < totalPages ;i++) {
-          const StartIndex = i * this.projectsPerPage
-          const EndIndex = StartIndex + this.projectsPerPage
-          const pageProjects = projects.slice(StartIndex, EndIndex)
-          const projectsPage = document.createElement("div")
-          projectsPage.classList.add("page")
-          projectsPage.dataset.pageNumber = i + 1
-          pageProjects.forEach((pageProject) => {
-            const projectElement = this.projectView.createProjectElement(pageProject)
-            projectsPage.appendChild(projectElement)
-          })
-          if (i === 0) {
-            projectsPage.style.display = "flex"
-          } else {
-            projectsPage.style.display = "none"
-          }
-          this.projectListElement.appendChild(projectsPage)
-        }
-        const allPages = document.querySelectorAll(".page")
-        allPages.forEach((page) => {
-          const pageNumber = parseInt(page.dataset.pageNumber)
-        
-          if (pageNumber === 1) {
-            page.style.display = "flex"
-          } else {
-            page.style.display = "none"
-          }
-        })
-      }
-      
-      renderPagination(projects) {
-         // Create pagination links
-         const totalPages = Math.ceil(projects.length / this.projectsPerPage)
-         const paginationContainer = this.paginationContainer
-         paginationContainer.classList.add("pagination")
-         
-         for (let i = 1 ;i <= totalPages ;i++) {
-           const paginationButton = document.createElement("button")
-           paginationButton.classList.add('pagination-button')
-           paginationButton.innerText = i
-           paginationButton.addEventListener("click", (event) => {
-             const allPages = document.querySelectorAll(".page")
-             allPages.forEach((page) => {
-               if (page.dataset.pageNumber === event.target.innerText) {
-                 page.style.display = "flex"
-               } else {
-                 page.style.display = "none"
-               }
-             })
-           })
-         
-           paginationContainer.appendChild(paginationButton)
-         }
-         
-         this.container.appendChild(paginationContainer)
-      }
 
     renderProjects(projectsToRender) {
         projectsToRender.forEach(project => {
@@ -104,34 +44,52 @@ export class ProjectsController
         })
     }
 
-    attachFilterEvents() {
-        this.filterButtons.forEach(button => {
-            button.addEventListener('click',(event) => {
-                const selectedTag=event.target.value.toLowerCase()
-                console.log(selectedTag)
-                const filteredProjects=[...this.requester.getFilteredProjects(selectedTag)]
-                this.cleanProjects()
-                this.renderProjectsInPages(filteredProjects)
-                this.paginationContainer.innerHTML=""
-                this.renderPagination(filteredProjects)
-                this.styleActivePaginationBtn()
-            })
-        })
+    cleanProjects() {
+        this.projectListElement.innerHTML = ""
+    }
+    
+    cleanPagination() {
+        this.paginationContainer.innerHTML = ""
+    }
+    
+    manageDefaultSelectedTag() {
+        const allTag = this.filterButtons[0]
+        allTag.classList.add('active-tag')
     }
 
-    // createPaginationButtons(totalPages, arrayItems){
-    //     for (let i = 1 ;i <= totalPages ;i++) {
-    //         const button = document.createElement("button")
-    //         button.classList.add('pagination-button')
-    //         button.innerText = i
-    //         button.addEventListener("click", (event) => {
-    //             currentPage = i
-    //             this.cleanProjects()
-    //             this.renderProjectsWithPagination(arrayItems)
-    //           })
-    //           this.paginationContainer.appendChild(button)
-    //       }
-    // }
+    getSelectedTag() {
+        let selectedTag
+        this.filterButtons.forEach(filterButton => {
+            if (filterButton.classList.contains('active-tag')) {
+                selectedTag = filterButton.value.toLowerCase()
+            }
+        })
+        return selectedTag
+    }
+    
+
+    renderPagination(count) {
+        const totalPages = Math.ceil(count / this.projectsPerPage)
+        let selectedTag
+        
+        for (let i = 1 ;i <= totalPages ;i++) {
+            const paginationButton = document.createElement("button")
+            paginationButton.classList.add('pagination-button')
+            paginationButton.innerText = i
+            this.paginationContainer.appendChild(paginationButton)
+
+            paginationButton.addEventListener("click", () => {
+                this.filterButtons.forEach(button => { 
+                    if(button.classList.contains('active-tag')){
+                        selectedTag = button.value.toLowerCase()
+                    }      
+                });
+                const projectsToRender = this.requester.getProjectsByCriteria(Number(paginationButton.innerText), this.projectsPerPage, selectedTag).filteredProjects
+                this.cleanProjects()
+                this.renderProjects(projectsToRender)
+            });
+        }
+    }
 
     styleActivePaginationBtn(){
         const buttons=this.container.querySelectorAll('.pagination-button')
@@ -146,11 +104,34 @@ export class ProjectsController
                 })
             })
     }
+    
+    attachFilterEvents() {
+        console.log(this.filterButtons)
+        this.filterButtons.forEach(button => {
+            button.addEventListener('click',(event) => {
+                this.filteredProjects.forEach(button=>{
+                    if(button.classList.contains('active-tag')){
+                        button.classList.remove('active-tag')
+                    }
+                })
+                button.classList.add('active-tag')
+                const selectedTag = event.target.value.toLowerCase()
+                const projectsData = this.requester.getProjectsByCriteria(this.currentPage, this.projectsPerPage, selectedTag)
+                const totalProjects = projectsData.count
+                const projectsToRender = projectsData.filteredProjects
+                this.cleanProjects()
+                this.cleanPagination()
+                this.renderProjects(projectsToRender)
+                this.renderPagination(totalProjects)
+                
+                this.attachPaginationEvents()
+                this.styleActivePaginationBtn()
+            })
+        })
+    }
+    
+    
 }
-
-
-
-
 
 
 

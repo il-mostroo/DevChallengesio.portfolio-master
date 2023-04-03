@@ -2,6 +2,7 @@ import { ProjectsController } from './projectsController.js'
 
 const projectsContainer=document.querySelector('#projects-container')
 const projectsController=new ProjectsController (projectsContainer)
+
 projectsController.initialise()
 
 // animate progress bars using animation library:

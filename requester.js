@@ -1,10 +1,16 @@
 import { projects } from "./DataSource.js"
 export class Requester{
    
-    getAllProjects(){
-        return projects
+    getProjectsByCriteria(currentPage, projectsPerPage, selectedTag) {
+        const filteredProjects=this.getFilteredProjects(selectedTag)
+        const count=filteredProjects.length
+        const StartIndex = (currentPage - 1) * projectsPerPage
+        const EndIndex = StartIndex + projectsPerPage
+        const pageProjects = filteredProjects.slice(StartIndex, EndIndex)
+        
+        return {filteredProjects: pageProjects, count}
     }
-    getFilteredProjects(selectedTag){
+    getFilteredProjects(selectedTag) {
         const filteredProjects=[]
                 projects.forEach(project => {
                     project.technologies.forEach(technology => {
@@ -18,3 +24,6 @@ export class Requester{
                 return filteredProjects;
     }
 }
+
+
+// get projectsByCriteria that returns an object that contains total projects and list of projects.
