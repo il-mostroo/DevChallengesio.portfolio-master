@@ -24,6 +24,7 @@ export class ProjectsController
         this.projectsItems=this.container.querySelector('#project-list').children
         this.filterButtons=this.container.querySelectorAll('.projects-filter-button')
         this.paginationContainer = this.container.querySelector("#pagination-container")
+        this.projectsTitle = this.container.querySelector('#projects-title')
     }
 
     onPageLoad() {
@@ -32,6 +33,7 @@ export class ProjectsController
         const projectsData = this.requester.getProjectsByCriteria(this.currentPage, this.projectsPerPage, selectedTag)
         const totalProjects = projectsData.count
         const projectsToRender = projectsData.filteredProjects
+        this.displayTotalProjects(totalProjects)
         this.renderProjects(projectsToRender)
         this.renderPagination(totalProjects)
         this.attachPaginationEvents()
@@ -43,6 +45,10 @@ export class ProjectsController
             const projectElement = this.projectView.createProjectElement(project)
             this.projectListElement.appendChild(projectElement)
         })
+    }
+
+    displayTotalProjects(count) {
+        this.projectsTitle.innerText = `Projects (${count})`
     }
 
     cleanProjects() {
@@ -127,6 +133,7 @@ export class ProjectsController
                 const projectsToRender = projectsData.filteredProjects
                 this.cleanProjects()
                 this.cleanPagination()
+                this.displayTotalProjects(totalProjects)
                 this.renderProjects(projectsToRender)
                 this.renderPagination(totalProjects)
                 this.attachPaginationEvents()
