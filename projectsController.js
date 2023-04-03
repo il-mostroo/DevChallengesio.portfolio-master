@@ -34,6 +34,7 @@ export class ProjectsController
         const projectsToRender = projectsData.filteredProjects
         this.renderProjects(projectsToRender)
         this.renderPagination(totalProjects)
+        this.attachPaginationEvents()
         this.styleActivePaginationBtn()
     }
 
@@ -70,25 +71,31 @@ export class ProjectsController
 
     renderPagination(count) {
         const totalPages = Math.ceil(count / this.projectsPerPage)
-        let selectedTag
         
         for (let i = 1 ;i <= totalPages ;i++) {
             const paginationButton = document.createElement("button")
             paginationButton.classList.add('pagination-button')
             paginationButton.innerText = i
             this.paginationContainer.appendChild(paginationButton)
+        }
+    }
 
-            paginationButton.addEventListener("click", () => {
+    attachPaginationEvents() {
+        const paginationButtons = this.container.querySelectorAll('.pagination-button')
+        let selectedTag
+        paginationButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                console.log('button clicked')
                 this.filterButtons.forEach(button => { 
                     if(button.classList.contains('active-tag')){
                         selectedTag = button.value.toLowerCase()
                     }      
                 });
-                const projectsToRender = this.requester.getProjectsByCriteria(Number(paginationButton.innerText), this.projectsPerPage, selectedTag).filteredProjects
+                const projectsToRender = this.requester.getProjectsByCriteria(Number(button.innerText), this.projectsPerPage, selectedTag).filteredProjects
                 this.cleanProjects()
                 this.renderProjects(projectsToRender)
             });
-        }
+        })
     }
 
     styleActivePaginationBtn(){
@@ -122,6 +129,7 @@ export class ProjectsController
                 this.cleanPagination()
                 this.renderProjects(projectsToRender)
                 this.renderPagination(totalProjects)
+                this.attachPaginationEvents()
                 this.styleActivePaginationBtn()
             })
         })
