@@ -106,10 +106,9 @@ export class ProjectsController
     }
     
     attachFilterEvents() {
-        console.log(this.filterButtons)
         this.filterButtons.forEach(button => {
             button.addEventListener('click',(event) => {
-                this.filteredProjects.forEach(button=>{
+                this.filterButtons.forEach(button=>{
                     if(button.classList.contains('active-tag')){
                         button.classList.remove('active-tag')
                     }
@@ -123,8 +122,6 @@ export class ProjectsController
                 this.cleanPagination()
                 this.renderProjects(projectsToRender)
                 this.renderPagination(totalProjects)
-                
-                this.attachPaginationEvents()
                 this.styleActivePaginationBtn()
             })
         })
