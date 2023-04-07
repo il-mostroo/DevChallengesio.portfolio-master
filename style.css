@@ -60,9 +60,12 @@ section{
     -moz-box-shadow: 0 7px 6px -6px #cbcbcb;
     box-shadow: 0 7px 6px -6px #cbcbcb;
 }
-section:not(#project-list){
+section:not(#project-list, #projects-container){
     padding: 1.375rem;
     background-color: white;
+}
+#projects-container{
+    background:none;
 }
 /* profile component: */
 .profile img{
@@ -304,7 +307,6 @@ section:not(#project-list){
     display: flex;
 }
 .project{
-    padding: 1.375rem;
     background-color: white;
     border-radius: 0.75rem;
 }
@@ -386,9 +388,7 @@ section:not(#project-list){
 .left-column section:not(:last-child), .right-column section:not(:last-child){
     margin-bottom: 2.625rem;
 }
-p,img{
-    max-width: 100%;
-}
+
 
 /* footer: */
 footer p{
@@ -403,7 +403,9 @@ footer p a {
 /* responsivness : */
 
 @media  screen and (max-width: 37.5rem) {
-    
+    body{
+        padding: 0;
+    }
     .wrap, .middle-content, #project-list, .profile, .header-image-wrap, .infos, .experience{
         display: flex;
         flex-direction: column;
@@ -427,11 +429,27 @@ footer p a {
     .experience img{
         margin-bottom: 0.625rem;
     }
-    #projects-container > section, .project{
+    #projects-container{
         padding: 0;
     }
+   
     .projects-filter-button{
         font-size: var(--xs-size);
     }
-    
+    .profile img, .hobbies img, .blog img{
+        width: 100%;
+    }
+    .profile p, .blog p{
+        max-width: 100%;
+    }
+    .project:not(:last-child){
+        margin-bottom: 2.625rem;
+    }
+    #project-list img, .project{
+        width: 100%;
+        margin-right: 0;
+    }
+    footer{
+        font-size: var(--xs-size);
+    }
 }
