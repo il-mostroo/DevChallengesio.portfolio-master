@@ -286,7 +286,7 @@ section:not(#project-list){
     font-size: var(--s-size);
     color: var(--lightness31);
     border-color: var(--lightness31);
-    padding: 0.5rem 1.375rem;
+    padding: 0.5em 1.375em;
     border-radius: 0.75rem;
     margin-right: 1rem;
 }
@@ -386,6 +386,9 @@ section:not(#project-list){
 .left-column section:not(:last-child), .right-column section:not(:last-child){
     margin-bottom: 2.625rem;
 }
+p,img{
+    max-width: 100%;
+}
 
 /* footer: */
 footer p{
@@ -397,5 +400,38 @@ footer p a {
     color: var(--footer-color);
 }
 
+/* responsivness : */
 
-
+@media  screen and (max-width: 37.5rem) {
+    
+    .wrap, .middle-content, #project-list, .profile, .header-image-wrap, .infos, .experience{
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+    }
+    .left-column, .right-column{
+        width: 100%;
+    }
+    .profile img, .intro{
+        margin-bottom: 0.625rem;
+    }
+    .hobbies{
+        margin-bottom: 2.625rem;
+    }
+    .header-image-wrap h1{
+        margin-bottom: 0.625rem;
+    }
+    .experience{
+        max-width: 100%;
+    }
+    .experience img{
+        margin-bottom: 0.625rem;
+    }
+    #projects-container > section, .project{
+        padding: 0;
+    }
+    .projects-filter-button{
+        font-size: var(--xs-size);
+    }
+    
+}
